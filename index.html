@@ -1,42 +1,17 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Family Dinner Tycoon</title>
-  <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Family Dinner Tycoon - 2D Test</title>
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-  <!-- HUD de estatísticas principais -->
-  <div id="hud">
-    <p>Atratividade: <span id="hud-attractiveness">0</span></p>
-    <p>Diversão: <span id="hud-fun">0</span></p>
-    <p>Serviço: <span id="hud-service">0</span></p>
-    <p>Dinheiro: $<span id="hud-money">0</span></p>
-    <p>Paranoia: <span id="hud-paranoia">0</span></p>
-    <p>Hora: <span id="hud-time">6:00</span> — <span id="hud-phase">Manhã</span></p>
-  </div>
+  <h1>Family Dinner Tycoon - Jogo 2D (Protótipo)</h1>
 
-  <!-- Botão para avançar o tempo -->
-  <button id="advance-time">Avançar Tempo</button>
+  <!-- CANVAS DO JOGO -->
+  <canvas id="gameCanvas" width="512" height="512"></canvas>
 
-  <!-- Seção para eventos e interações do dia -->
-  <div id="game-panel">
-    <h2 id="event-title">Início do dia</h2>
-    <div id="event-description">
-      <p>Organize a pizzaria para a abertura.</p>
-    </div>
-    <!-- Aqui aparecerão os diálogos, ações e decisões -->
-    <div id="interaction"></div>
-  </div>
-
-  <!-- Popup de jornal -->
-  <div id="newspaper" class="hidden">
-    <h2>📰 Notícia do Dia</h2>
-    <p id="news-text"></p>
-    <button onclick="closeNewspaper()">Fechar</button>
-  </div>
-
-  <script src="js/script.js"></script>
+  <script src="js/game2d.js"></script>
 </body>
 </html>
