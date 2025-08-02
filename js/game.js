@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const tableW = TILE * 2;
     const tableH = TILE;
     ctx.drawImage(sprites['table'], tableX, tableY, tableW, tableH);
-  }
+  });
 
   function drawPlayer() {
     ctx.drawImage(sprites['william'], player.x * TILE, player.y * TILE, TILE, TILE);
