@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     sprites[name] = img;
   });
 
-  // Carregar tile único de chão
+  // Carregar tile de chão
   const floorImg = new Image();
   floorImg.src = 'assets/tiles/floor.png';
   sprites['floor'] = floorImg;
@@ -22,8 +22,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // Estado do player na grid
   const player = { x: 5, y: 5 };
   const keys = {};
-  document.addEventListener('keydown', e => keys[e.key] = true);
-  document.addEventListener('keyup', e => keys[e.key] = false);
+  document.addEventListener('keydown', e => { keys[e.key] = true; });
+  document.addEventListener('keyup', e => { keys[e.key] = false; });
 
   function update() {
     if (keys['ArrowUp'])    player.y -= 1;
@@ -43,50 +43,48 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function drawObjects() {
-  // Coordenadas e dimensões
-  const chairY = 6 * TILE;
-  const tableX = 8 * TILE;
-  const tableY = chairY - TILE / 2;
-  const tableW = TILE * 2;
-  const tableH = TILE;
-
-  // 1) Desenha top half (superior) da mesa
-  ctx.drawImage(
-    sprites['table'],
-    0, 0,                 // sx, sy da imagem
-    tableW, tableH / 2,   // sw, sh para top half
-    tableX, tableY,       // dx, dy
-    tableW, tableH / 2    // dw, dh
-  );
-
-  // 2) Desenha cadeiras atrás (fill gap)
-  [8, 9].forEach(col => {
-    ctx.drawImage(sprites['chair'], col * TILE, chairY, TILE, TILE);
-  });
-
-  // 3) Desenha bottom half (inferior) da mesa sobrepondo cadeiras
-  ctx.drawImage(
-    sprites['table'],
-    0, tableH / 2,        // sx, sy: começo do bottom half
-    tableW, tableH / 2,   // sw, sh
-    tableX, tableY + tableH / 2, // dx, dy para bottom half
-    tableW, tableH / 2    // dw, dh
-  );
-};
-    
-    // Mesa 2x1 tiles, sobrepondo metade das cadeiras
-    const tableX = 8 * TILE;           // começa na coluna 8
-    const tableY = chairY - TILE / 2;  // meio tile acima
+    // Coordenadas
+    const chairY = 6 * TILE;
+    const tableX = 8 * TILE;
+    const tableY = chairY - TILE / 2;
     const tableW = TILE * 2;
     const tableH = TILE;
-    ctx.drawImage(sprites['table'], tableX, tableY, tableW, tableH);
-  });
 
-  function drawPlayer() {
-    ctx.drawImage(sprites['william'], player.x * TILE, player.y * TILE, TILE, TILE);
+    // 1) Desenha metade superior da mesa
+    ctx.drawImage(
+      sprites['table'],
+      0, 0,
+      tableW, tableH / 2,
+      tableX, tableY,
+      tableW, tableH / 2
+    );
+
+    // 2) Desenha cadeiras atrás
+    [8, 9].forEach(col => {
+      ctx.drawImage(sprites['chair'], col * TILE, chairY, TILE, TILE);
+    });
+
+    // 3) Desenha metade inferior da mesa por cima
+    ctx.drawImage(
+      sprites['table'],
+      0, tableH / 2,
+      tableW, tableH / 2,
+      tableX, tableY + tableH / 2,
+      tableW, tableH / 2
+    );
   }
 
-  // Aguarda carregamento de todas as imagens
+  function drawPlayer() {
+    ctx.drawImage(
+      sprites['william'],
+      player.x * TILE,
+      player.y * TILE,
+      TILE,
+      TILE
+    );
+  }
+
+  // Inicia após carregar todas as imagens
   Promise.all(
     Object.values(sprites).map(img => new Promise(res => {
       if (img.complete && img.naturalWidth) return res();
