@@ -44,11 +44,11 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function drawObjects() {
-  // Cadeira ocupa 1 tile (32x32)
+  // Duas cadeiras atrás da mesa
   ctx.drawImage(sprites['chair'], 8 * TILE, 5 * TILE, TILE, TILE);
-  // Mesa ocupa 2 tiles de largura sem escala, desenhando duas vezes
-  ctx.drawImage(sprites['table'], 9 * TILE, 5 * TILE, TILE, TILE);
-  ctx.drawImage(sprites['table'], 10 * TILE, 5 * TILE, TILE, TILE);
+  ctx.drawImage(sprites['chair'], 11 * TILE, 5 * TILE, TILE, TILE);
+  // Mesa ocupa 2 tiles de largura, sendo escalada para TILE*2
+  ctx.drawImage(sprites['table'], 9 * TILE, 5 * TILE, TILE * 2, TILE);
 }
 
   function drawPlayer() {
