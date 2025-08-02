@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
   floorImg.src = 'assets/tiles/floor.png';
   sprites['floor'] = floorImg;
 
-  // Player na grid
+  // Estado do player na grid
   const player = { x: 5, y: 5 };
   const keys = {};
   document.addEventListener('keydown', e => keys[e.key] = true);
@@ -30,7 +30,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (keys['ArrowDown'])  player.y += 1;
     if (keys['ArrowLeft'])  player.x -= 1;
     if (keys['ArrowRight']) player.x += 1;
-    // Limites da grid
     player.x = Math.max(0, Math.min(COLS - 1, player.x));
     player.y = Math.max(0, Math.min(ROWS - 1, player.y));
   }
@@ -44,27 +43,33 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function drawObjects() {
-  // Duas cadeiras atrás da mesa
-  ctx.drawImage(sprites['chair'], 8 * TILE, 5 * TILE, TILE, TILE);
-  ctx.drawImage(sprites['chair'], 11 * TILE, 5 * TILE, TILE, TILE);
-  // Mesa ocupa 2 tiles de largura, sendo escalada para TILE*2
-  ctx.drawImage(sprites['table'], 9 * TILE, 5 * TILE, TILE * 2, TILE);
-}
+    console.log('Desenhando objetos');
+    // Cadeira esquerda atrás da mesa
+    ctx.drawImage(sprites['chair'], 8 * TILE, 5 * TILE, TILE, TILE);
+    // Cadeira direita atrás da mesa
+    ctx.drawImage(sprites['chair'], 11 * TILE, 5 * TILE, TILE, TILE);
+    // Mesa escalada para 2 tiles (64x32)
+    ctx.drawImage(sprites['table'], 9 * TILE, 5 * TILE, TILE * 2, TILE);
+  }
 
   function drawPlayer() {
     ctx.drawImage(sprites['william'], player.x * TILE, player.y * TILE, TILE, TILE);
   }
 
-  // Espera carregar tudo antes de iniciar loop
+  // Aguarda carregamento de todas as imagens
   Promise.all(
     Object.values(sprites).map(img => new Promise(res => {
       if (img.complete && img.naturalWidth) return res();
       img.onload = () => res();
       img.onerror = () => console.error(`Falha ao carregar: ${img.src}`);
     }))
-  ).then(() => requestAnimationFrame(loop));
+  ).then(() => {
+    console.log('Sprites carregadas, iniciando loop');
+    requestAnimationFrame(loop);
+  });
 
   function loop() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     update();
     drawFloor();
     drawObjects();
