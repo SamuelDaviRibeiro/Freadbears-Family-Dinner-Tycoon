@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
     tableX, tableY + tableH / 2, // dx, dy para bottom half
     tableW, tableH / 2    // dw, dh
   );
-});
+};
     
     // Mesa 2x1 tiles, sobrepondo metade das cadeiras
     const tableX = 8 * TILE;           // começa na coluna 8
