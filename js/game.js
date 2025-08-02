@@ -43,12 +43,36 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function drawObjects() {
-    console.log('Desenhando objetos');
-    // Cadeiras atrás da mesa (linha 6)
-    const chairY = 6 * TILE;
-    [8, 9].forEach(col => {
-      ctx.drawImage(sprites['chair'], col * TILE, chairY, TILE, TILE);
-    });
+  // Coordenadas e dimensões
+  const chairY = 6 * TILE;
+  const tableX = 8 * TILE;
+  const tableY = chairY - TILE / 2;
+  const tableW = TILE * 2;
+  const tableH = TILE;
+
+  // 1) Desenha top half (superior) da mesa
+  ctx.drawImage(
+    sprites['table'],
+    0, 0,                 // sx, sy da imagem
+    tableW, tableH / 2,   // sw, sh para top half
+    tableX, tableY,       // dx, dy
+    tableW, tableH / 2    // dw, dh
+  );
+
+  // 2) Desenha cadeiras atrás (fill gap)
+  [8, 9].forEach(col => {
+    ctx.drawImage(sprites['chair'], col * TILE, chairY, TILE, TILE);
+  });
+
+  // 3) Desenha bottom half (inferior) da mesa sobrepondo cadeiras
+  ctx.drawImage(
+    sprites['table'],
+    0, tableH / 2,        // sx, sy: começo do bottom half
+    tableW, tableH / 2,   // sw, sh
+    tableX, tableY + tableH / 2, // dx, dy para bottom half
+    tableW, tableH / 2    // dw, dh
+  );
+});
     
     // Mesa 2x1 tiles, sobrepondo metade das cadeiras
     const tableX = 8 * TILE;           // começa na coluna 8
