@@ -43,19 +43,22 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function drawObjects() {
-    // Cadeiras posicionadas atrás da mesa (uma linha abaixo)
-    const chairBehindY = 6 * TILE;
-    ctx.drawImage(sprites['chair'], 8 * TILE, chairBehindY, TILE, TILE);
-    ctx.drawImage(sprites['chair'], 11 * TILE, chairBehindY, TILE, TILE);
-
-    // Mesa maior, desenhada por cima das cadeiras
-    // Usamos altura de 2 tiles para sobrepor metade da cadeira
-    const tableX = 9 * TILE;
-    const tableY = 5 * TILE;
+    console.log('Desenhando objetos');
+    // Cadeiras atrás da mesa (linha 6)
+    const chairY = 6 * TILE;
+    [8, 9].forEach(col => {
+      ctx.drawImage(sprites['chair'], col * TILE, chairY, TILE, TILE);
+    });
+    
+    // Mesa 2x1 tiles, sobrepondo metade das cadeiras
+    const tableX = 8 * TILE;           // começa na coluna 8
+    const tableY = chairY - TILE / 2;  // meio tile acima
     const tableW = TILE * 2;
-    const tableH = TILE * 2;
+    const tableH = TILE;
     ctx.drawImage(sprites['table'], tableX, tableY, tableW, tableH);
-}function drawPlayer() {
+  }
+
+  function drawPlayer() {
     ctx.drawImage(sprites['william'], player.x * TILE, player.y * TILE, TILE, TILE);
   }
 
